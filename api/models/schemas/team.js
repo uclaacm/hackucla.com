@@ -1,34 +1,14 @@
-const cache = require('../../cache');
-const config = require('../../config');
-const _ = require('underscore');
-const uuid = require('node-uuid');
-const TOTAL_ATTENDANCE = 12;
-
-let Schema = require('mongoose').Schema;
-let ObjectId = Schema.ObjectId;
+let mongoose = require('mongoose');
 
 let User = require('./user');
-let Team = new Schema({
-    id: {
-		type: String,
-		required: true,
-		unique: true,
-		default: () => uuid.v4() 
-	},
+
+const TOTAL_ATTENDANCE = 12;
+
+let Team = new mongoose.Schema({
 	name: { type: String, required: true },
-	members: { type: [User], required: true },
+    members: [{ type: mongoose.Schema.ObjectId, ref: 'User' , required: true}],
 	scores: { type: [{ sessionNumber: Number, score: Number }] },
 	attendance: { type: [{ sessionNumber: Number, usersAttended: [String] }] }
-});
-
-Team.pre('save', function(next) {
-	cache.set(config.cache.keys.teamsNeedUpdate, "1");
-	next();
-});
-
-Team.pre('remove', function(next) {
-	cache.set(config.cache.keys.teamsNeedUpdate, "1");
-	next();
 });
 
 Team.statics.getAll = function() {
@@ -49,11 +29,10 @@ Team.methods.addUser = function(user) {
 		this.addAttended(user.attendance[i], user.id);
 };
 
+// TODO: use mongoose methods
 Team.methods.removeUser = function(user) {
-	console.log("--> in remove");
 	for (let i = 0; i < this.members.length; i++) {
 		if (this.members[i].id === user.id) {
-			console.log("found user at index", i);
 			this.members.splice(i--, 1);
 		}
 	}
@@ -77,12 +56,10 @@ Team.methods.addAttended = function(sessionNumber, userId) {
 };
 
 Team.methods.removeAttended = function(sessionNumber, userId) {
-	console.log("remove attended for session", sessionNumber, "user id", userId);
 	for (let i = 0; i < this.attendance.length; i++) {
 		if (this.attendance[i].sessionNumber === sessionNumber) {
 			let index = this.attendance[i].usersAttended.indexOf(userId);
 			if (index !== -1) {
-				console.log("user attended session, removing obj index", i, "elem", index);
 				this.attendance[i].usersAttended.splice(index, 1);
 			}
 		}
@@ -110,8 +87,9 @@ Team.methods.removeScore = function(sessionNumber) {
 	}
 };
 
+// TODO: refactor with mongoose to get all scores' sessionNumber and score
 Team.methods.getScores = function() {
-	return this.scores.map(score => _.pick(score, ['sessionNumber', 'score']));
+    return null;
 }
 
 Team.methods.getPublic = function(withMembers=true) {
@@ -126,4 +104,4 @@ Team.methods.getPublic = function(withMembers=true) {
 	return team;
 };
 
-module.exports = Team;
+module.exports = mongoose.model('Team', Team);

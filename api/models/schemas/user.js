@@ -1,24 +1,10 @@
-const _ = require('underscore');
-const uuid = require('node-uuid');
-let Schema = require('mongoose').Schema;
-let ObjectId = Schema.ObjectId;
+let mongoose = require('mongoose');
 
-let User = new Schema({
-	id: {
-		type: String,
-		required: true,
-		unique: true,
-		default: () => uuid.v4()
-	},
+let User = new mongoose.Schema({
     profileId: {
 		type: String,
 		required: true, 
 		unique: true
-	},
-	state: {
-		type: String,
-		default: 'PENDING',
-		enum: [ 'PENDING', 'ACTIVE', 'BLOCKED' ]
 	},
 	name: { type: String, required: true},
 	email: { type: String },
@@ -31,7 +17,7 @@ let User = new Schema({
 	lastSignIn: { type: Date },
 	teamId: { type: String },
 	attendance: [Number]
-}, { minimize: false });
+});
 
 User.statics.findById = function(id) {
 	return this.findOne({ id }).exec();
@@ -41,8 +27,9 @@ User.statics.findByProfileId = function(profileId) {
 	return this.findOne({ profileId }).exec();
 };
 
+// TODO: get id, name, profile picture, and attendance
 User.methods.getPublic = function() {
-	return _.pick(this, ['id', 'name', 'profilePicture', 'attendance']);
+    return null;
 };
 
-module.exports = User;
+module.exports = mongoose.model('User', User);

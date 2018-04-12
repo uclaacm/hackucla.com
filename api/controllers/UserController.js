@@ -1,6 +1,6 @@
 'use strict';
 
-const User = require('../models/User'); // eslint-disable-line
+const User = require('../models/schemas/user'); // eslint-disable-line
 
 function index(req, res) {
 	res.json('/ endpoint hit');
