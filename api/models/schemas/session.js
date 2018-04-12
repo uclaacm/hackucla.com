@@ -29,7 +29,7 @@ Session.statics.findById = function(id) {
 };
 
 Session.statics.findSessionForDate = function(date) {
-	return this.findOne({ "date.start" : { $lt : new Date(date) }, "date.end" : { $gt : new Date(date) } }).exec();
+	return this.findOne({ 'date.start' : { $lt : new Date(date) }, 'date.end' : { $gt : new Date(date) } }).exec();
 };
 
-module.exports = mongoose.model('Session', Session);
+module.exports = Session;

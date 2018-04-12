@@ -21,8 +21,12 @@ mongoose.connection.on('error', (err) => {
 	console.log('Mongoose default connection error: ' + err);
 });
 
-let User = require('./schemas/user');
-let Team = require('./schemas/team');
-let Session = require('./schemas/session');
+// let User = require('./schemas/user');
+// let Team = require('./schemas/team');
+// let Session = require('./schemas/session');
+
+let User = mongoose.model('User', require('./schemas/user'));
+let Team = mongoose.model('Team', require('./schemas/team'));
+let Session = mongoose.model('Session', require('./schemas/session'));
 
 module.exports = { User, Team, Session };

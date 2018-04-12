@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
 
 let User = new mongoose.Schema({
-    profileId: {
+	profileId: {
 		type: String,
 		required: true, 
 		unique: true
@@ -29,7 +29,7 @@ User.statics.findByProfileId = function(profileId) {
 
 // TODO: get id, name, profile picture, and attendance
 User.methods.getPublic = function() {
-    return null;
+	return null;
 };
 
-module.exports = mongoose.model('User', User);
+module.exports = User;

@@ -1,12 +1,10 @@
 let mongoose = require('mongoose');
 
-let User = require('./user');
-
 const TOTAL_ATTENDANCE = 12;
 
 let Team = new mongoose.Schema({
 	name: { type: String, required: true },
-    members: [{ type: mongoose.Schema.ObjectId, ref: 'User' , required: true}],
+	members: [{ type: mongoose.Schema.ObjectId, ref: 'User' , required: true}],
 	scores: { type: [{ sessionNumber: Number, score: Number }] },
 	attendance: { type: [{ sessionNumber: Number, usersAttended: [String] }] }
 });
@@ -89,8 +87,8 @@ Team.methods.removeScore = function(sessionNumber) {
 
 // TODO: refactor with mongoose to get all scores' sessionNumber and score
 Team.methods.getScores = function() {
-    return null;
-}
+	return null;
+};
 
 Team.methods.getPublic = function(withMembers=true) {
 	let team = {
@@ -104,4 +102,4 @@ Team.methods.getPublic = function(withMembers=true) {
 	return team;
 };
 
-module.exports = mongoose.model('Team', Team);
+module.exports = Team;
