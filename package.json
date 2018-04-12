@@ -1,7 +1,7 @@
 {
-  "name": "react-node-docker-starter",
+  "name": "hackucla.com",
   "version": "1.0.0",
-  "description": "Boilerplate for react/node/docker projects",
+  "description": "Dashboard for ACM Hack quarter-long courses",
   "main": "",
   "devDependencies": {
     "eslint": "^4.16.0",
