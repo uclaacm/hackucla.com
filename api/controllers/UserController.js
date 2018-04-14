@@ -15,19 +15,34 @@ module.exports = function (User) { // eslint-disable-line
 
     function create(req, res) {
         User.create(req.body.name, req.body.profileId)
-            .then(user => {
-                console.log(user);
-                res.json(user);
-            })
+            .then(user => res.json(user))
             .catch(error => {
-                console.error(error);
-                res.status(404).end();
+                return next(error);
+            });
+    }
+
+    function findByProfileId(req, res) {
+        let profileId = req.params.profileId;
+        User.findByProfileId(profileId)
+            .then(user => res.json(user))
+            .catch(error => {
+                return next(error);
+            });
+    }
+
+    function deleteUser(req, res, next) {
+        User.delete(req.params.id)
+            .then(res.status(200).end())
+            .catch(error => {
+                return next(error);
             });
     }
 
     return {
         index,
         getName,
-        create
+        create,
+        findByProfileId,
+        deleteUser
     };
 };
