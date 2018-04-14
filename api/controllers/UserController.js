@@ -13,7 +13,7 @@ module.exports = function (User) { // eslint-disable-line
         res.json('Joe Bruin');
     }
 
-    function create(req, res) {
+    function create(req, res, next) {
         User.create(req.body.name, req.body.profileId)
             .then(user => res.json(user))
             .catch(error => {
@@ -21,7 +21,7 @@ module.exports = function (User) { // eslint-disable-line
             });
     }
 
-    function findByProfileId(req, res) {
+    function findByProfileId(req, res, next) {
         let profileId = req.params.profileId;
         User.findByProfileId(profileId)
             .then(user => res.json(user))
