@@ -2,9 +2,9 @@ let mongoose = require('mongoose');
 
 // User Schema Definition
 let userSchema = new mongoose.Schema({
-    email: { type: String },
-    name: { type: String, required: true },
-    profileId: {
+	email: { type: String },
+	name: { type: String, required: true },
+	profileId: {
 		type: String,
 		required: true, 
 		unique: true
@@ -30,17 +30,17 @@ let userSchema = new mongoose.Schema({
  *     .catch(error => console.error(error));
  */
 userSchema.statics.create = function (name, profileId) {
-    var user = new this({
-        name,
-        profileId
-    });
+	var user = new this({
+		name,
+		profileId
+	});
 
-    return new Promise((resolve, reject) => {
-        user.save((error, newUser) => {
-            if (error) reject(error);
-            else resolve(newUser);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		user.save((error, newUser) => {
+			if (error) reject(error);
+			else resolve(newUser);
+		});
+	});
 };
 
 /**
@@ -54,12 +54,12 @@ userSchema.statics.create = function (name, profileId) {
  *     .catch(error => console.error(error));
  */
 userSchema.statics.findByProfileId = function (profileId) {
-    return new Promise((resolve, reject) => {
-        this.findOne({ profileId }, (err, user) => {
-            if (err) reject(err);
-            else resolve(user);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		this.findOne({ profileId }, (err, user) => {
+			if (err) reject(err);
+			else resolve(user);
+		});
+	});
 };
 
 /**
@@ -70,12 +70,12 @@ userSchema.statics.findByProfileId = function (profileId) {
  *     .catch(error => console.error(error));
  */
 userSchema.statics.delete = function (id) {
-    return new Promise((resolve, reject) => {
-        this.remove({ _id: id }, (err) => {
-            if (err) reject(err);
-            else resolve();
-        });
-    });
+	return new Promise((resolve, reject) => {
+		this.remove({ _id: id }, (err) => {
+			if (err) reject(err);
+			else resolve();
+		});
+	});
 };
 
 module.exports = userSchema;

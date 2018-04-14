@@ -1,21 +1,21 @@
 let mongoose = require('mongoose');
 
 let sessionSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    image: { type: String, required: true },
-    date: {
-        start: { type: Date, required: true },
-        end: { type: Date, required: true },
-    },
-    resources: {
-        sourceCodeLink: { type: String },
-        slidesLink: { type: String },
-        videoLink: { type: String },
-    },
-    project: {
-        submissionLink: { type: String }
-    }
+	name: { type: String, required: true },
+	description: { type: String, required: true },
+	image: { type: String, required: true },
+	date: {
+		start: { type: Date, required: true },
+		end: { type: Date, required: true },
+	},
+	resources: {
+		sourceCodeLink: { type: String },
+		slidesLink: { type: String },
+		videoLink: { type: String },
+	},
+	project: {
+		submissionLink: { type: String }
+	}
 });
 
 // Session Schema Methods
@@ -28,8 +28,8 @@ let sessionSchema = new mongoose.Schema({
  * Session.init()
  */
 sessionSchema.statics.init = function () {
-    return new this();
-}
+	return new this();
+};
 
 /**
  * Sets name of session
@@ -42,45 +42,45 @@ sessionSchema.statics.init = function () {
  *        .then(session => console.log(session));
  */
 sessionSchema.methods.withName = function (name) {
-    this.name = name;
-    return this;
-}
+	this.name = name;
+	return this;
+};
 
 sessionSchema.methods.withDescription = function (description) {
-    this.description = description;
-    return this;
-}
+	this.description = description;
+	return this;
+};
 
 sessionSchema.methods.withImage = function (image) {
-    this.image = image;
-    return this;
-}
+	this.image = image;
+	return this;
+};
 
 sessionSchema.methods.withDateRange = function (startDate, endDate) {
-    this.date.start = startDate;
-    this.date.end = endDate;
-    return this;
-}
+	this.date.start = startDate;
+	this.date.end = endDate;
+	return this;
+};
 
 sessionSchema.methods.withSourceCodeLink = function (sourceCodeLink) {
-    this.resources.sourceCodeLink = sourceCodeLink;
-    return this;
-}
+	this.resources.sourceCodeLink = sourceCodeLink;
+	return this;
+};
 
 sessionSchema.methods.withSlidesLink = function (slidesLink) {
-    this.resources.slidesLink = slidesLink;
-    return this;
-}
+	this.resources.slidesLink = slidesLink;
+	return this;
+};
 
 sessionSchema.methods.withVideoLink = function (videoLink) {
-    this.resources.videoLink = videoLink;
-    return this;
-}
+	this.resources.videoLink = videoLink;
+	return this;
+};
 
 sessionSchema.methods.withSubmissionLink = function (submissionLink) {
-    this.project.submissionLink = submissionLink;
-    return this;
-}
+	this.project.submissionLink = submissionLink;
+	return this;
+};
 
 /**
  * Creates and saves an initialized Session object
@@ -96,12 +96,12 @@ sessionSchema.methods.withSubmissionLink = function (submissionLink) {
  *        .then(session => console.log(session));
  */
 sessionSchema.methods.build = function () {
-    return new Promise((resolve, reject) => {
-        this.save((error, newSession) => {
-            if (error) reject(error);
-            else resolve(newSession);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		this.save((error, newSession) => {
+			if (error) reject(error);
+			else resolve(newSession);
+		});
+	});
 };
 
 /**
@@ -113,12 +113,12 @@ sessionSchema.methods.build = function () {
  *     .catch(error => console.error(error));
  */
 sessionSchema.statics.getAll = function () {
-    return new Promise((resolve, reject) => {
-        this.find({}, (error, sessions) => {
-            if (error) reject(error);
-            else resolve(sessions);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		this.find({}, (error, sessions) => {
+			if (error) reject(error);
+			else resolve(sessions);
+		});
+	});
 };
 
 module.exports = sessionSchema;

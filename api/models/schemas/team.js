@@ -1,14 +1,12 @@
 let mongoose = require('mongoose');
 
-const TOTAL_ATTENDANCE = 12;
-
 let teamSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    members: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-        required: true
-    }]
+	name: { type: String, required: true },
+	members: [{
+		type: mongoose.Schema.ObjectId,
+		ref: 'User',
+		required: true
+	}]
 }, { usePushEach: true });
 
 // Team Schema Methods
@@ -24,17 +22,17 @@ let teamSchema = new mongoose.Schema({
  *     .catch(error => console.error(error));
  */
 teamSchema.statics.create = function (name, members) {
-    var team = new this({
-        name,
-        members
-    });
+	var team = new this({
+		name,
+		members
+	});
 
-    return new Promise((resolve, reject) => {
-        team.save((error, newTeam) => {
-            if (error) reject(error);
-            else resolve(newTeam);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		team.save((error, newTeam) => {
+			if (error) reject(error);
+			else resolve(newTeam);
+		});
+	});
 };
 
 /**
@@ -46,12 +44,12 @@ teamSchema.statics.create = function (name, members) {
  *     .catch(error => console.error(error));
  */
 teamSchema.statics.getAll = function () {
-    return new Promise((resolve, reject) => {
-        this.find({}, (error, teams) => {
-            if (error) reject(error);
-            else resolve(teams);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		this.find({}, (error, teams) => {
+			if (error) reject(error);
+			else resolve(teams);
+		});
+	});
 };
 
 /**
@@ -64,12 +62,12 @@ teamSchema.statics.getAll = function () {
  *     .catch(error => console.error(error));
  */
 teamSchema.statics.getById = function (id) {
-    return new Promise((resolve, reject) => {
-        this.findById(id, (error, team) => {
-            if (error) reject(error);
-            else resolve(team);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		this.findById(id, (error, team) => {
+			if (error) reject(error);
+			else resolve(team);
+		});
+	});
 };
 
 /**
@@ -82,12 +80,12 @@ teamSchema.statics.getById = function (id) {
  *     .catch(error => console.error(error));
  */
 teamSchema.statics.getByName = function (name) {
-    return new Promise((resolve, reject) => {
-        this.findOne({ name }, (error, team) => {
-            if (error) reject(error);
-            else resolve(team);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		this.findOne({ name }, (error, team) => {
+			if (error) reject(error);
+			else resolve(team);
+		});
+	});
 };
 
 /**
@@ -100,14 +98,14 @@ teamSchema.statics.getByName = function (name) {
  *     .catch(error => console.error(error));
  */
 teamSchema.methods.addMember = function (newMemberId) {
-    this.members.push(newMemberId);
+	this.members.push(newMemberId);
 
-    return new Promise((resolve, reject) => {
-        this.save((error, team) => {
-            if (error) reject(error);
-            else resolve(team);
-        });
-    });
+	return new Promise((resolve, reject) => {
+		this.save((error, team) => {
+			if (error) reject(error);
+			else resolve(team);
+		});
+	});
 };
 
 /**
@@ -120,19 +118,19 @@ teamSchema.methods.addMember = function (newMemberId) {
  *     .catch(error => console.error(error));
  */
 teamSchema.methods.removeMember = function (memberId) {
-    return new Promise((resolve, reject) => {
-        var index = this.members.indexOf(memberId);
-        if (index > -1) {
-            this.members.splice(index, 1);
-        } else {
-            reject("A user with this ID does not exist in this team.");
-        }
+	return new Promise((resolve, reject) => {
+		var index = this.members.indexOf(memberId);
+		if (index > -1) {
+			this.members.splice(index, 1);
+		} else {
+			reject('A user with this ID does not exist in this team.');
+		}
 
-        this.save((error, team) => {
-            if (error) reject(error);
-            else resolve(team);
-        });
-    });
+		this.save((error, team) => {
+			if (error) reject(error);
+			else resolve(team);
+		});
+	});
 };
 
 module.exports = teamSchema;
