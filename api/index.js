@@ -16,11 +16,13 @@ app.use(cors({
 const config = require('./config');
 
 // Connect to database
-let { User } = require('./models');
+let { User, Team } = require('./models');
 
 // Set up router endpoints
 const userRouter = require('./routes/user')(User);
 app.use('/user', userRouter);
+const teamRouter = require('./routes/team')(Team);
+app.use('/team', teamRouter);
 
 server.listen(config.server.port, () => {
 	console.log('Listening on port ' + config.server.port);

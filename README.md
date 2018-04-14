@@ -90,4 +90,4 @@ It is often slow to do front-end development in a Docker container and wait for 
     **Do _NOT_ force push to other people's branches or shared branches**
 
 ## Documentation
-* We are using [documentation.js](https://github.com/documentationjs/documentation) to document code.
+* We are using [documentation.js](https://github.com/documentationjs/documentation) to document code and [apidoc.js](http://apidocjs.com) to document APIs.
