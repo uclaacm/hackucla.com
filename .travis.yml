@@ -4,3 +4,6 @@ language: node_js
 # Always use latest Node.js version
 node_js:
   - node
+
+notifications:
+  email: false
