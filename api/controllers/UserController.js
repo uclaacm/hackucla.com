@@ -1,16 +1,20 @@
 'use strict';
 
-const User = require('../models/User'); // eslint-disable-line
+/**
+ * Defines /user endpoint methods
+ * @param {Mongoose.Model} MongoDB User model
+ */
+module.exports = function(User) { // eslint-disable-line
+	function index(req, res) {
+		res.json('/ endpoint hit');
+	}
 
-function index(req, res) {
-	res.json('/ endpoint hit');
-}
+	function getName(req, res) {
+		res.json('Joe Bruin');
+	}
 
-function getName(req, res) {
-	res.json('Joe Bruin');
-}
-
-module.exports = {
-	index,
-	getName
+	return {
+		index,
+		getName
+	};
 };

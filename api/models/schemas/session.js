@@ -1,72 +1,124 @@
-const uuid = require('node-uuid');
-const _ = require('underscore');
-const dbUtil = require('../util');
-let Schema = require('mongoose').Schema;
-let ObjectId = Schema.ObjectId;
+let mongoose = require('mongoose');
 
-let Session = new Schema({
-	id: {
-		type: String,
-		required: true,
-		unique: true,
-		default: () => uuid.v4()
-	},
-	number: { type: Number, required: true, unique: true },
-	secret: { type: String, required: true, unique: true },
+let sessionSchema = new mongoose.Schema({
 	name: { type: String, required: true },
-	desc: { type: String, required: true },
+	description: { type: String, required: true },
 	image: { type: String, required: true },
 	date: {
 		start: { type: Date, required: true },
 		end: { type: Date, required: true },
 	},
-	blogPostLink: { type: String },
-	project: {
-		points: { type: Number },
-		videoLink: { type: String },
+	resources: {
+		sourceCodeLink: { type: String },
 		slidesLink: { type: String },
-		submissionLink: { type: String },
-		sourceCodeLink: { type: String }
+		videoLink: { type: String },
+	},
+	project: {
+		submissionLink: { type: String }
 	}
-}, { minimize: false });
-
-Session.pre('save', function(next) {
-	if (this.date && this.date.start)
-		this.date.start = new Date(this.date.start);
-	if (this.date && this.date.end)
-		this.date.end = new Date(this.date.end);
-	next();
 });
 
-Session.statics.getAll = function() {
-	return this.find({}).exec();
+// Session Schema Methods
+
+/**
+ * Creates an uninitialized Session object (not saved to DB yet).
+ * Utilizes builder pattern.
+ * @returns {Session} empty Session object
+ * @example
+ * Session.init()
+ */
+sessionSchema.statics.init = function () {
+	return new this();
 };
 
-Session.statics.findById = function(id) {
-	return this.findOne({ id }).exec();
+/**
+ * Sets name of session
+ * @param {string} name
+ * @returns {Session} this session
+ * @example
+ * Session.init()
+ *        .withName("name")
+ *        .build()
+ *        .then(session => console.log(session));
+ */
+sessionSchema.methods.withName = function (name) {
+	this.name = name;
+	return this;
 };
 
-Session.statics.findSessionForDate = function(date) {
-	return this.findOne({ "date.start" : { $lt : new Date(date) }, "date.end" : { $gt : new Date(date) } }).exec();
+sessionSchema.methods.withDescription = function (description) {
+	this.description = description;
+	return this;
 };
 
-Session.statics.sanitize = function(session, withId=true) {
-	let pickProperties = ['number','name','secret','date','desc','image','blogPostLink','project']; 
-	if (withId) pickProperties.unshift('id');
-	session = _.pick(session, pickProperties);
-	if (session.date)
-		session.date = _.pick(session.date, ['start', 'end']);
-	if (session.project)
-		session.project = _.pick(session.project, ['points','slidesLink','videoLink','submissionLink','sourceCodeLink']);
-	return session;
+sessionSchema.methods.withImage = function (image) {
+	this.image = image;
+	return this;
 };
 
-Session.methods.update = function(obj) { dbUtil.update(obj, this); }
-Session.methods.getPublic = function(withSecret=false) {
-	let obj = this.constructor.sanitize(this);
-	if (!withSecret)
-		delete obj.secret;
-	return obj;
+sessionSchema.methods.withDateRange = function (startDate, endDate) {
+	this.date.start = startDate;
+	this.date.end = endDate;
+	return this;
 };
 
-module.exports = Session;
+sessionSchema.methods.withSourceCodeLink = function (sourceCodeLink) {
+	this.resources.sourceCodeLink = sourceCodeLink;
+	return this;
+};
+
+sessionSchema.methods.withSlidesLink = function (slidesLink) {
+	this.resources.slidesLink = slidesLink;
+	return this;
+};
+
+sessionSchema.methods.withVideoLink = function (videoLink) {
+	this.resources.videoLink = videoLink;
+	return this;
+};
+
+sessionSchema.methods.withSubmissionLink = function (submissionLink) {
+	this.project.submissionLink = submissionLink;
+	return this;
+};
+
+/**
+ * Creates and saves an initialized Session object
+ * @param {Session} initialized session
+ * @returns {Session} newly saved Session object
+ * @example
+ * Session.init()
+ *        .withName("name")
+ *        .withDescription("desc")
+ *        .withImage("imageURL")
+ *        .withDateRange(new Date(), new Date())
+ *        .build()
+ *        .then(session => console.log(session));
+ */
+sessionSchema.methods.build = function () {
+	return new Promise((resolve, reject) => {
+		this.save((error, newSession) => {
+			if (error) reject(error);
+			else resolve(newSession);
+		});
+	});
+};
+
+/**
+ * Fetches all sessions
+ * @returns {Session[]} all saved Session objects
+ * @example
+ * Session.getAll()
+ *     .then(sessions => console.log(sessions))
+ *     .catch(error => console.error(error));
+ */
+sessionSchema.statics.getAll = function () {
+	return new Promise((resolve, reject) => {
+		this.find({}, (error, sessions) => {
+			if (error) reject(error);
+			else resolve(sessions);
+		});
+	});
+};
+
+module.exports = sessionSchema;

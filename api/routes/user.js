@@ -1,11 +1,12 @@
 'use strict';
+module.exports = function(userDb) {
+	const express = require('express');
+	let router = express.Router();
 
-const express = require('express');
-let router = express.Router();
+	const userController = require('../controllers/UserController')(userDb);
 
-const userController = require('../controllers/UserController');
+	router.get('/', userController.index);
+	router.get('/name', userController.getName);
 
-router.get('/', userController.index);
-router.get('/name', userController.getName);
-
-module.exports = router;
+	return router;
+};

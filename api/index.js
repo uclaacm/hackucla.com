@@ -7,17 +7,17 @@ const server = http.createServer(app);
 const cors = require('cors');
 
 app.use(cors({
-    credentials: true,
-    origin: true
+	credentials: true,
+	origin: true
 }));
 
 const config = require('./config');
 
 // Connect to database
-require('./models');
+let { User } = require('./models');
 
 // Set up router endpoints
-const userRouter = require('./routes/user');
+const userRouter = require('./routes/user')(User);
 app.use('/user', userRouter);
 
 server.listen(config.server.port, () => {

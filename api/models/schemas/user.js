@@ -1,48 +1,81 @@
-const _ = require('underscore');
-const uuid = require('node-uuid');
-let Schema = require('mongoose').Schema;
-let ObjectId = Schema.ObjectId;
+let mongoose = require('mongoose');
 
-let User = new Schema({
-	id: {
-		type: String,
-		required: true,
-		unique: true,
-		default: () => uuid.v4()
-	},
-    profileId: {
+// User Schema Definition
+let userSchema = new mongoose.Schema({
+	email: { type: String },
+	name: { type: String, required: true },
+	profileId: {
 		type: String,
 		required: true, 
 		unique: true
 	},
-	state: {
-		type: String,
-		default: 'PENDING',
-		enum: [ 'PENDING', 'ACTIVE', 'BLOCKED' ]
-	},
-	name: { type: String, required: true},
-	email: { type: String },
 	profilePicture: {
 		small: { type: String },
 		medium: { type: String },
 		large: { type: String }
 	},
-	accessToken: { type: String },
-	lastSignIn: { type: Date },
-	teamId: { type: String },
-	attendance: [Number]
-}, { minimize: false });
+	teamId: { type: String }
+});
 
-User.statics.findById = function(id) {
-	return this.findOne({ id }).exec();
+// User Schema Methods
+
+/**
+ * Creates and saves a User object in the database
+ * @param {string} user's name
+ * @param {string} user's profile ID (Google/Facebook)
+ * @returns {User} newly saved User object
+ * @example
+ * User.create('Joe Bruin', 'someProfileId')
+ *     .then(user => console.log(user))
+ *     .catch(error => console.error(error));
+ */
+userSchema.statics.create = function (name, profileId) {
+	var user = new this({
+		name,
+		profileId
+	});
+
+	return new Promise((resolve, reject) => {
+		user.save((error, newUser) => {
+			if (error) reject(error);
+			else resolve(newUser);
+		});
+	});
 };
 
-User.statics.findByProfileId = function(profileId) {
-	return this.findOne({ profileId }).exec();
+/**
+ * Read and Retrieve a User object from the database based on 
+ * their Google or Facebook profile ID
+ * @param {string} user's profileID
+ * @returns {User} one User object with matching ID
+ * @example
+ * User.findByProfileId('someId')
+ *     .then(user => console.log(user))
+ *     .catch(error => console.error(error));
+ */
+userSchema.statics.findByProfileId = function (profileId) {
+	return new Promise((resolve, reject) => {
+		this.findOne({ profileId }, (err, user) => {
+			if (err) reject(err);
+			else resolve(user);
+		});
+	});
 };
 
-User.methods.getPublic = function() {
-	return _.pick(this, ['id', 'name', 'profilePicture', 'attendance']);
+/**
+ * Deletes user from DB given the MongoDB ID
+ * @param {string} user's MongoDB ID
+ * @example
+ * User.delete('someMongoId')
+ *     .catch(error => console.error(error));
+ */
+userSchema.statics.delete = function (id) {
+	return new Promise((resolve, reject) => {
+		this.remove({ _id: id }, (err) => {
+			if (err) reject(err);
+			else resolve();
+		});
+	});
 };
 
-module.exports = User;
+module.exports = userSchema;

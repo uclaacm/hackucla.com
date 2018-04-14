@@ -1,129 +1,136 @@
-const cache = require('../../cache');
-const config = require('../../config');
-const _ = require('underscore');
-const uuid = require('node-uuid');
-const TOTAL_ATTENDANCE = 12;
+let mongoose = require('mongoose');
 
-let Schema = require('mongoose').Schema;
-let ObjectId = Schema.ObjectId;
-
-let User = require('./user');
-let Team = new Schema({
-    id: {
-		type: String,
-		required: true,
-		unique: true,
-		default: () => uuid.v4() 
-	},
+let teamSchema = new mongoose.Schema({
 	name: { type: String, required: true },
-	members: { type: [User], required: true },
-	scores: { type: [{ sessionNumber: Number, score: Number }] },
-	attendance: { type: [{ sessionNumber: Number, usersAttended: [String] }] }
-});
+	members: [{
+		type: mongoose.Schema.ObjectId,
+		ref: 'User',
+		required: true
+	}]
+}, { usePushEach: true });
 
-Team.pre('save', function(next) {
-	cache.set(config.cache.keys.teamsNeedUpdate, "1");
-	next();
-});
+// Team Schema Methods
 
-Team.pre('remove', function(next) {
-	cache.set(config.cache.keys.teamsNeedUpdate, "1");
-	next();
-});
+/**
+ * Creates and saves a Team object in the database
+ * @param {string} team's name
+ * @param {string[]} list of users' IDs in team
+ * @returns {Team} newly saved Team object
+ * @example
+ * Team.create('Team A', ['idA', 'idB', 'idC'])
+ *     .then(team => console.log(team))
+ *     .catch(error => console.error(error));
+ */
+teamSchema.statics.create = function (name, members) {
+	var team = new this({
+		name,
+		members
+	});
 
-Team.statics.getAll = function() {
-	return this.find({}).exec();
+	return new Promise((resolve, reject) => {
+		team.save((error, newTeam) => {
+			if (error) reject(error);
+			else resolve(newTeam);
+		});
+	});
 };
 
-Team.statics.findById = function(id) {
-	return this.findOne({ id }).exec();
+/**
+ * Fetches all teams
+ * @returns {Team[]} all saved Team objects
+ * @example
+ * Team.getAll()
+ *     .then(teams => console.log(teams))
+ *     .catch(error => console.error(error));
+ */
+teamSchema.statics.getAll = function () {
+	return new Promise((resolve, reject) => {
+		this.find({}, (error, teams) => {
+			if (error) reject(error);
+			else resolve(teams);
+		});
+	});
 };
 
-Team.statics.findByName = function(name) {
-	return this.findOne({ name }).exec();
+/**
+ * Fetches a Team object given an ID
+ * @param {string} team's MongoDB ID
+ * @returns {Team} Team with given ID
+ * @example
+ * Team.getById('someId')
+ *     .then(team => console.log(team))
+ *     .catch(error => console.error(error));
+ */
+teamSchema.statics.getById = function (id) {
+	return new Promise((resolve, reject) => {
+		this.findById(id, (error, team) => {
+			if (error) reject(error);
+			else resolve(team);
+		});
+	});
 };
 
-Team.methods.addUser = function(user) {
-	this.members.push(user);
-	for (let i = 0; i < user.attendance.length; i++) 
-		this.addAttended(user.attendance[i], user.id);
+/**
+ * Fetches a Team object given a team name
+ * @param {string} team's name
+ * @returns {Team} Team with given name
+ * @example
+ * Team.getByName('someName')
+ *     .then(team => console.log(team))
+ *     .catch(error => console.error(error));
+ */
+teamSchema.statics.getByName = function (name) {
+	return new Promise((resolve, reject) => {
+		this.findOne({ name }, (error, team) => {
+			if (error) reject(error);
+			else resolve(team);
+		});
+	});
 };
 
-Team.methods.removeUser = function(user) {
-	console.log("--> in remove");
-	for (let i = 0; i < this.members.length; i++) {
-		if (this.members[i].id === user.id) {
-			console.log("found user at index", i);
-			this.members.splice(i--, 1);
+/**
+ * Adds a member to the team
+ * @param {string} user ID
+ * @returns {Team} updated team
+ * @example
+ * team.addMember('userId')
+ *     .then(team => console.log(team))
+ *     .catch(error => console.error(error));
+ */
+teamSchema.methods.addMember = function (newMemberId) {
+	this.members.push(newMemberId);
+
+	return new Promise((resolve, reject) => {
+		this.save((error, team) => {
+			if (error) reject(error);
+			else resolve(team);
+		});
+	});
+};
+
+/**
+ * Removes a member from the team
+ * @param {string} user ID
+ * @returns {Team} updated team
+ * @example
+ * team.removeMember('userId')
+ *     .then(team => console.log(team))
+ *     .catch(error => console.error(error));
+ */
+teamSchema.methods.removeMember = function (memberId) {
+	return new Promise((resolve, reject) => {
+		var index = this.members.indexOf(memberId);
+		if (index > -1) {
+			this.members.splice(index, 1);
+		} else {
+			reject('A user with this ID does not exist in this team.');
 		}
-	}
 
-	for (let i = 0; i < user.attendance.length; i++)
-		this.removeAttended(user.attendance[i], user.id);
+		this.save((error, team) => {
+			if (error) reject(error);
+			else resolve(team);
+		});
+	});
 };
 
-Team.methods.addAttended = function(sessionNumber, userId) {
-	let sessionFound = false;
-	for (let i = 0; i < this.attendance.length; i++) {
-		if (this.attendance[i].sessionNumber === sessionNumber) {
-			sessionFound = true;
-			if (!this.attendance[i].usersAttended.includes(userId))
-				this.attendance[i].usersAttended.push(userId);
-		}
-	}
-
-	if (!sessionFound)
-		this.attendance.push({ sessionNumber: sessionNumber, usersAttended: [userId] });
-};
-
-Team.methods.removeAttended = function(sessionNumber, userId) {
-	console.log("remove attended for session", sessionNumber, "user id", userId);
-	for (let i = 0; i < this.attendance.length; i++) {
-		if (this.attendance[i].sessionNumber === sessionNumber) {
-			let index = this.attendance[i].usersAttended.indexOf(userId);
-			if (index !== -1) {
-				console.log("user attended session, removing obj index", i, "elem", index);
-				this.attendance[i].usersAttended.splice(index, 1);
-			}
-		}
-	}
-};
-
-Team.methods.addOrUpdateScore = function(sessionNumber, score, daysLate) {
-	daysLate = Math.max(0, daysLate || 0);
-	score = Math.max(0, score - ((daysLate <= 0) ? 0 : Math.pow(2, daysLate - 1)));
-	for (let i = 0; i < this.scores.length; i++) {
-		if (this.scores[i].sessionNumber === sessionNumber) {
-			this.scores[i].score = score;
-			return;
-		}
-	}
-
-	this.scores.push({ sessionNumber, score });
-};
-
-Team.methods.removeScore = function(sessionNumber) {
-	for (let i = 0; i < this.scores.length; i++) {
-		if (this.scores[i].sessionNumber === sessionNumber) {
-			this.scores.splice(i--, 1);
-		}
-	}
-};
-
-Team.methods.getScores = function() {
-	return this.scores.map(score => _.pick(score, ['sessionNumber', 'score']));
-}
-
-Team.methods.getPublic = function(withMembers=true) {
-	let team = {
-		id: this.id,
-		name: this.name,
-		scores: this.getScores(),
-		totalScore: this.scores.reduce((a,b) => a + b.score, 0) + (TOTAL_ATTENDANCE / this.members.length) * this.attendance.reduce((a,b) => a + b.usersAttended.length, 0)
-	};
-	
-	if (withMembers) team.members = this.members.map(member => member.getPublic());
-	return team;
-};
-
-module.exports = Team;
+module.exports = teamSchema;

@@ -11,19 +11,19 @@ import Main from './Main/Main';
 
 // These are the properties we'll automatically pass to Main
 function mapStateToProps(state) {
-    console.log("Redux Store: " + JSON.stringify(state));
-    return {
-        user: state.user
-    };
+	console.log('Redux Store: ' + JSON.stringify(state));
+	return {
+		user: state.user
+	};
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actionCreators, dispatch);
+	return bindActionCreators(actionCreators, dispatch);
 }
 
 const App = withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(Main));
 
 export default App;
