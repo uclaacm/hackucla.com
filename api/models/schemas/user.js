@@ -71,7 +71,7 @@ userSchema.statics.findByProfileId = function (profileId) {
  */
 userSchema.statics.delete = function (id) {
 	return new Promise((resolve, reject) => {
-        this.findByIdAndRemove(id, (err) => {
+		this.findByIdAndRemove(id, (err) => {
 			if (err) reject(err);
 			else resolve();
 		});

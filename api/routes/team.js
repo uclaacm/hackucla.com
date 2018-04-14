@@ -1,13 +1,13 @@
 'use strict';
 module.exports = function (teamDb) {
-    const express = require('express');
-    let router = express.Router();
+	const express = require('express');
+	let router = express.Router();
 
-    const teamController = require('../controllers/TeamController')(teamDb);
+	const teamController = require('../controllers/TeamController')(teamDb);
 
-    router.get('/', teamController.getAll);
+	router.get('/', teamController.getAll);
 
-    /**
+	/**
      * @api {get} /team/find Find a team
      * @apiName Find
      * @apiGroup Team
@@ -29,11 +29,11 @@ module.exports = function (teamDb) {
      *          ]
      *      }
      */
-    router.get('/find', teamController.find);
+	router.get('/find', teamController.find);
     
-    router.get('/test', teamController.test);
+	router.get('/test', teamController.test);
 
-    /**
+	/**
      * @api {post} /team/new Create new team
      * @apiName New
      * @apiGroup Team
@@ -54,10 +54,10 @@ module.exports = function (teamDb) {
      *          ]
      *      }
      */
-    router.post('/new', teamController.create);
+	router.post('/new', teamController.create);
 
-    router.post('/:id/member', teamController.addMember);
-    router.delete('/:id/member', teamController.removeMember);
+	router.post('/:id/member', teamController.addMember);
+	router.delete('/:id/member', teamController.removeMember);
 
-    return router;
+	return router;
 };
