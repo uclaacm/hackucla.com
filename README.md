@@ -1,4 +1,4 @@
-# React-Node-Docker Starter Boilerplate
+# hackucla.com
 
 ## Setting up environment for the first time
 * For Mac users:
