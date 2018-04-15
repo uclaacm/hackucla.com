@@ -26,6 +26,8 @@ module.exports = function (Team) { // eslint-disable-line
 				.catch(error => {
 					return next(error);
 				});
+		} else {
+			return res.status(404).json({ error: '/team/find requires a query parameter of \'id\' or \'name\'' });
 		}
 	}
 
