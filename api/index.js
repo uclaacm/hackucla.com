@@ -25,6 +25,8 @@ const teamRouter = require('./routes/team')(Team);
 app.use('/team', teamRouter);
 const sessionRouter = require('./routes/session')(Session);
 app.use('/session', sessionRouter);
+const authRouter = require('./routes/auth')(app, User);
+app.use('/auth', authRouter);
 
 server.listen(config.server.port, () => {
 	console.log('Listening on port ' + config.server.port);
