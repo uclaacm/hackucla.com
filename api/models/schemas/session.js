@@ -121,4 +121,13 @@ sessionSchema.statics.getAll = function () {
 	});
 };
 
+sessionSchema.statics.delete = function (id) {
+	return new Promise((resolve, reject) => {
+		this.findByIdAndRemove(id, (err) => {
+			if (err) reject(err);
+			else resolve();
+		});
+	});
+};
+
 module.exports = sessionSchema;
