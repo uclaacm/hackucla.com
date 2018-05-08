@@ -29,7 +29,6 @@
     text-align: right;
 }
 :local(.page1_subtagline) {
-    font-weight: normal;
     line-height: 3.5vw;
     font-size: 3.5vw;
     letter-spacing: 0.1em;
@@ -40,7 +39,6 @@
 :local(.text_poppins) {
     font-family: Poppins;
     font-style: normal;
-    font-weight: bold;
 }
 :local(.text_chivo) {
     font-family: Chivo;
@@ -72,7 +70,7 @@
 }
 
 :local(.rect) {
-    height: 6px;
+    height: 8px;
     width: 14vw;
     margin: 10px 0px;
     fill: #C960FF;
@@ -83,5 +81,5 @@
     text-align: left;
     font-weight: normal;
     font-size: 1.5vw;
-    line-height: 3vw;
+    line-height: 2.5vw;
 }
