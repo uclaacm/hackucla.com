@@ -19,6 +19,10 @@ class Homepage extends Component {
 				<div className={styles.page2}>
 					<img className={styles.img} src={page2Background} />
 					<img className={styles.logo} src={blackLogo} />
+					<div className={styles.page2_textBox}>
+						<div className={styles.text + ' ' + styles.page2_title}>What is Hack?</div>
+						
+					</div>
 				</div>
 			</div>
 		);
