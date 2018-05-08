@@ -42,3 +42,15 @@
 :local(.red) {
     color: #FB4469;
 }
+
+:local(.page2) {
+    position: absolute;
+    display: flex;
+}
+
+:local(.logo) {
+    position: absolute;
+    right: 20vw;
+    align-self: center;
+    width: 22vw;
+}
