@@ -21,7 +21,11 @@ class Homepage extends Component {
 					<img className={styles.logo} src={blackLogo} />
 					<div className={styles.page2_textBox}>
 						<div className={styles.text_poppins + ' ' + styles.page2_title}>What is Hack?</div>
-						<div className={styles.text_chivo + ' ' + styles.page2_whoweare}>{'We are a student-run organization that aims to empower UCLA students to influence their world through code. We host events for coders of all skill levels. So whether you\'ve been to 10 hackathons, or you just learned "hello world," we\'re happy to have you.'} </div>
+						<div className={styles.text_chivo + ' ' + styles.page2_whoweare}>
+							{'We are a student-run organization that aims to empower UCLA students to influence their world through code.' 
+							+ ' We host events for coders of all skill levels. So whether you\'ve been to 10 hackathons, or you just learned'
+							+ ' "hello world," we\'re happy to have you.'} 
+						</div>
 					</div>
 				</div>
 			</div>

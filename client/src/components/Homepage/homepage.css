@@ -20,16 +20,18 @@
 :local(.page1_textBox) {
     position: absolute;
     right: 10vw;
+    padding-bottom: 50px;
 }
 :local(.page1_tagline) {
-    line-height: 6vw;
-    font-size: 6vw;
+    line-height: 6.5vw;
+    font-size: 6.5vw;
     color: #ffffff;
     text-align: right;
 }
 :local(.page1_subtagline) {
-    line-height: 3vw;
-    font-size: 3vw;
+    font-weight: normal;
+    line-height: 3.5vw;
+    font-size: 3.5vw;
     letter-spacing: 0.1em;
     color: #FB4469;
     text-align: right;
@@ -70,6 +72,7 @@
 }
 
 :local(.page2_whoweare) {
+    text-align: left;
     font-weight: normal;
     font-size: 1.5vw;
     line-height: 3vw;
