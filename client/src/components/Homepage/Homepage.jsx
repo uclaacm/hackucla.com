@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import splashBackground from './images/wrenches.png';
-import page2Background from './images/page2bg.png';
+import splashBackground from './images/SplashBackground.svg';
+import page2Background from './images/Page2Background.svg';
 import blackLogo from './images/logo-hack-black.png';
-import styles from './homepage.css';
+import styles from './Homepage.css';
 
 class Homepage extends Component {
 	render() {
