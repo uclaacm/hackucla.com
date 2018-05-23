@@ -9,7 +9,7 @@ class Homepage extends Component {
 		return (
 			<div>
 				<div className={styles.page1}>
-					<img className={styles.splashImg} src={splashBackground} />
+					<img className={styles.splashImg} src={splashBackground} alt="gears in background" />
 					<div className={styles.page1_textBox}>
 						<div className={styles.text_poppins + ' ' + styles.page1_tagline}>Move Fast<span className={styles.red}>.</span></div>
 						<div className={styles.text_poppins + ' ' + styles.page1_tagline}>Build Things<span className={styles.red}>.</span></div>
@@ -17,7 +17,7 @@ class Homepage extends Component {
 					</div>
 				</div>
 				<div className={styles.page2}>
-					<img className={styles.splashImg} src={page2Background} />
+					<img className={styles.splashImg} src={page2Background} alt="red and purple blocks" />
 					<div className={styles.page2Content}>
 						<div className={styles.page2_textBox}>
 							<div className={styles.text_poppins + ' ' + styles.page2_title}>What is Hack?</div>
@@ -28,7 +28,7 @@ class Homepage extends Component {
 							"hello world," we're happy to have you.`}
 							</div>
 						</div>
-						<img className={styles.logo} src={blackLogo} />						
+						<img className={styles.logo} src={blackLogo} alt="Hack logo of wrench in light bulb" />						
 					</div>
 				</div>
 			</div>
