@@ -1,9 +1,3 @@
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
-
 .navbar { /* I am using 1280 x 120, figma is 1440 x 120 */
     position: fixed;
     z-index: 500;
@@ -44,7 +38,6 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	/*margin-left: 20%;*/
 }
 
 .tab-style {
@@ -95,7 +88,7 @@
 
   	.mobile-only {
   		display: block;
-  	}
+	}
 
   	#navbar {
   		box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.25);
@@ -108,6 +101,10 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: fixed;
+	width: 100%;
+	z-index: 500;
+	background-color: white;
 }
 
 .mobile-tab-style {
@@ -130,4 +127,5 @@
 	width: 140px;
 	height: 50px;
 	padding-top: 9px;
+	margin-bottom: 20px;	
 }

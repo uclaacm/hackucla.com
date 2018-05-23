@@ -8,11 +8,13 @@ class Main extends Component {
 			<div>
 				<Nav />
 
-				{/*Alternate pages beneath navbar, based on current route*/}
-				<Switch>
-					<Route exact path='/' render={() => <Homepage {...this.props}/>} />
-					<Route path='/test' render={() => <MyComponent {...this.props} />} />
-				</Switch>
+				<div style={{ marginTop: 120 }}>
+					{/*Alternate pages beneath navbar, based on current route*/}
+					<Switch>
+						<Route exact path='/' render={() => <Homepage {...this.props} />} />
+						<Route path='/test' render={() => <MyComponent {...this.props} />} />
+					</Switch>
+				</div>
 			</div>
 		);
 	}
