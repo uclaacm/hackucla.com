@@ -1,8 +1,8 @@
 .navbar { /* I am using 1280 x 120, figma is 1440 x 120 */
-    position: fixed;
-    z-index: 500;
-    background: white;
-    left: 0px;
+	position: fixed;
+	z-index: 500;
+	background: white;
+	left: 0px;
 	top: 0px;
 	right: 0px;
 	height: 120px;
