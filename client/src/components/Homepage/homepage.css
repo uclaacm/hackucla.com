@@ -21,14 +21,14 @@
     padding-bottom: 50px;
 }
 :local(.page1_tagline) {
-    line-height: 6.5vw;
-    font-size: 6.5vw;
+    line-height: 90px;
+    font-size: 90px;
     color: #ffffff;
     text-align: right;
 }
 :local(.page1_subtagline) {
-    line-height: 3.5vw;
-    font-size: 3.5vw;
+    line-height: 45px;
+    font-size: 45px;
     letter-spacing: 0.1em;
     color: #FB4469;
     text-align: right;
@@ -61,23 +61,26 @@
     left: 20vw;
     width: 36vw;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 :local(.page2_title) {
-    font-size: 5vw;
+    font-size: 60px;
 }
 
 :local(.rect) {
     height: 8px;
     width: 14vw;
     margin: 10px 0px;
-    fill: #C960FF;
-    fill-opacity: 0.3;
+    background-color: #C960FF;
+    opacity: 0.3;
 }
 
 :local(.page2_whoweare) {
     text-align: left;
     font-weight: normal;
-    font-size: 1.5vw;
-    line-height: 2.5vw;
+    font-size: 24px;
+    line-height: 30px;
 }
