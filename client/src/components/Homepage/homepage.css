@@ -1,44 +1,89 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins');
-:local(*) {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css?family=Chivo|Poppins:600');
+
+:local(.splashImg) {
+    width: 100%;
+    height: 100%;
 }
 
-:local(.img) {
-    width: 100%;
-    height: 100%;
-}
 :local(.page1) {
-    width: 100%;
-    height: 100%;
+	position: relative;
 }
 
 :local(.page1_textBox) {
-    position: absolute;
-    top: 200px;
-    right: 100px;
+	position: absolute;
+	top: 125px;
+	right: 75px;
+    text-align: right;	
 }
+
 :local(.page1_tagline) {
-    line-height: 93px;
+    line-height: 90px;
     font-size: 90px;
     color: #ffffff;
-    text-align: right;
 }
+
 :local(.page1_subtagline) {
-    font-weight: 600;
-    line-height: 52px;
-    font-size: 50px;
-    letter-spacing: 0.1em;
+    line-height: 45px;
+    font-size: 45px;
+    letter-spacing: 5px;
     color: #FB4469;
-    text-align: right;
-    margin-top: 10px;
+    margin-top: 20px;
 }
-:local(.text) {
+
+:local(.text_poppins) {
     font-family: Poppins;
-    font-style: normal;
     font-weight: bold;
 }
+
+:local(.text_chivo) {
+    font-family: Chivo;
+}
+
 :local(.red) {
     color: #FB4469;
 }
+
+:local(.page2) {
+	position: relative;
+}
+
+:local(.page2Content) {
+	position: absolute;
+	top: 150px;
+    left: 20%;	
+}
+
+:local(.logo) {
+	height: 250px;
+}
+
+:local(.page2_textBox) {
+	width: 500px;
+	text-align: center;
+	display: inline-block;
+}
+
+:local(.page2_title) {
+    font-size: 60px;
+}
+
+:local(.rectContainer) {
+	width: 100%;
+	display: flex;
+    flex-direction: column;
+	align-items: center;
+}
+
+:local(.rect) {
+    height: 8px;
+    width: 200px;
+    margin: 10px 0px;
+    background-color: #C960FF;
+    opacity: 0.3;
+}
+
+:local(.page2_whoweare) {
+    text-align: left;
+    font-size: 24px;
+    line-height: 30px;
+} 
