@@ -27,7 +27,7 @@
 
 :local(.event_title) {
     font-family: Poppins;
-    font-size: 2.5vw;
+    font-size: 26px;
     font-weight: bold;
     position: absolute;
     margin-bottom: 8px;
