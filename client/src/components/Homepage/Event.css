@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Palanquin|Chivo|Poppins:200,600');
+
+:local(*) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:local(.events_page) {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+:local(.events_title) {
+    font-family: Poppins;
+    font-size: 5vw;
+    color: #2C1638;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+:local(.event) {
+    border: 3px solid #2C1638;
+    height: 400px;
+    width: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+:local(.event_image_container) {
+    height: 225px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+:local(.event_title) {
+    font-family: Poppins;
+    font-size: 2.5vw;
+    font-weight: bold;
+    position: absolute;
+    margin-bottom: 8px;
+    color: #ffffff;
+    text-shadow: 0px 0px 2px #000000;
+}
+
+:local(.event_image) {
+    height: 100%;
+    background: 
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.6)
+    )
+}
+
+:local(.event_quarter_container) {
+    height: 40px;
+    width: 100%;
+    background-color: #DB99FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+:local(.event_quarter) {
+    font-family: Palanquin;
+
+}
+
+:local(.event_desc_container) {
+    display: flex;
+}
+
+:local(.event_desc) {
+    font-family: Poppins;
+    font-weight: light;
+    text-align: center;
+}

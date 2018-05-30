@@ -3,6 +3,7 @@ import splashBackground from './images/SplashBackground.svg';
 import page2Background from './images/Page2Background.svg';
 import blackLogo from './images/logo-hack-black.png';
 import styles from './Homepage.css';
+import Event from './Event';
 
 class Homepage extends Component {
 	render() {
@@ -31,6 +32,7 @@ class Homepage extends Component {
 						<img className={styles.logo} src={blackLogo} alt="Hack logo of wrench in light bulb" />						
 					</div>
 				</div>
+				<Event />
 			</div>
 		);
 	}
