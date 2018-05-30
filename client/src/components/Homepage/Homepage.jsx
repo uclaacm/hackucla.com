@@ -3,6 +3,24 @@ import splashBackground from './images/SplashBackground.svg';
 import page2Background from './images/Page2Background.svg';
 import blackLogo from './images/logo-hack-black.png';
 import styles from './Homepage.css';
+import Event from './Event';
+import testImage from './images/wrenches.png';
+import testImage2 from './images/page2bg.png';
+
+const events = [
+	{
+		title: 'Tech+You', 
+		quarter: 'Spring', 
+		desc: 'Tech+You is a showcase of the ways computer science can be applied to diverse fields.',
+		image: testImage
+	},
+	{
+		title: 'Learn.js',
+		quarter: 'Spring',
+		desc: 'Learn.js is a workshop series exploring the exciting uses of JavaScript.',
+		image: testImage2
+	}
+];
 
 class Homepage extends Component {
 	render() {
@@ -30,6 +48,16 @@ class Homepage extends Component {
 						</div>
 						<img className={styles.logo} src={blackLogo} alt="Hack logo of wrench in light bulb" />						
 					</div>
+				</div>
+				<div className={styles.events_page}>
+					<div className={styles.events_title}>Events</div>
+					{events.map(event => {
+						return <Event key={event.title} 
+							title={event.title} 
+							quarter={event.quarter} 
+							desc={event.desc} 
+							image={event.image}/>;
+					})}				
 				</div>
 			</div>
 		);
