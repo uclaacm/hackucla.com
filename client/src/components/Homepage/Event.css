@@ -6,22 +6,6 @@
     box-sizing: border-box;
 }
 
-:local(.events_page) {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-:local(.events_title) {
-    font-family: Poppins;
-    font-size: 5vw;
-    color: #2C1638;
-    font-weight: bold;
-    margin-bottom: 50px;
-}
-
 :local(.event) {
     border: 3px solid #2C1638;
     height: 400px;

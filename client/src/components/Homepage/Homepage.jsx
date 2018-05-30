@@ -5,6 +5,10 @@ import blackLogo from './images/logo-hack-black.png';
 import styles from './Homepage.css';
 import Event from './Event';
 
+const event = {title: 'Tech+You', 
+	quarter: 'Spring', 
+	desc: 'Tech+You is a showcase of the ways computer science can be applied to diverse fields.'};
+
 class Homepage extends Component {
 	render() {
 		return (
@@ -32,7 +36,12 @@ class Homepage extends Component {
 						<img className={styles.logo} src={blackLogo} alt="Hack logo of wrench in light bulb" />						
 					</div>
 				</div>
-				<Event />
+				<div className={styles.events_page}>
+					<div className={styles.events_title}>Events</div>
+					<div className={styles.events_container}>
+						<Event title={event.title} quarter={event.quarter} desc={event.desc} />
+					</div>
+				</div>
 			</div>
 		);
 	}
