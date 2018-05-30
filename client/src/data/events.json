@@ -3,10 +3,10 @@
 		"week": 1,
 		"title": "Intro to iOS",
 		"description": "This session will go over...",
-		"image": "http://via.placeholder.com/550x350",
+		"image": "https://via.placeholder.com/550x350",
 		"resources": {
-			"code": "www.github.com",
-			"slides": "www.drive.google.com",
+			"code": "github.com",
+			"slides": "drive.google.com",
 			"screencast": null
 		}
 	},
@@ -14,10 +14,10 @@
 		"week": 2,
 		"title": "Multiview Applications",
 		"description": "This session will go over...",
-		"image": "http://via.placeholder.com/550x350",
+		"image": "https://via.placeholder.com/550x350",
 		"resources": {
-			"code": "www.github.com",
-			"slides": "www.drive.google.com",
+			"code": "github.com",
+			"slides": "drive.google.com",
 			"screencast": null
 		}
 	}
